@@ -53,6 +53,7 @@ public class Player : MonoBehaviour
                 if ((collider.gameObject.layer == 8) && (score == maxScore))
                 {
                     GameObject.FindGameObjectWithTag("EndText").GetComponent<Renderer>().enabled = true;
+                    break;
                 }
             }
         }
