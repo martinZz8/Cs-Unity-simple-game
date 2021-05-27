@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
         //Count max score
         maxScore = GameObject.FindGameObjectsWithTag("Coin").Length;
     }
-
+    
     // Update is called once per frame
     void Update()
     {
@@ -43,8 +43,11 @@ public class Player : MonoBehaviour
         if (colliders.Length != 0)
         {
             //Check if player is grounded
-            if (rigidbodyComponent.velocity.y == 0)
+            if (rigidbodyComponent.velocity.y <= 0)
+            {
                 jumpCounter = 0;
+            }
+                
 
             //Check if player is in collision with EndStick
             foreach (Collider collider in colliders)
@@ -69,14 +72,13 @@ public class Player : MonoBehaviour
             }
             jumpKeyPressed = false;
         }
-
+        //Debug.Log("x: "+GetComponent<Transform>().position.x+" y: "+GetComponent<Transform>().position.y); //Pokazanie pozycji gracza
         //Movement logic
         rigidbodyComponent.velocity = new Vector3(horizontalInput * 2f, rigidbodyComponent.velocity.y, 0);
-
         //Check if player falls over the map
-        if (rigidbodyComponent.position.y <= -10)
+        if (rigidbodyComponent.position.y <= -7)
         {
-            rigidbodyComponent.position = new Vector3(0f, 2f, 0f);
+            rigidbodyComponent.position = new Vector3(0f, 3f, 0f);
         }
         
     }
