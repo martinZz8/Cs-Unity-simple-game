@@ -12,6 +12,8 @@ public class Player : MonoBehaviour
     private int jumpCounter = 0;
     private int score = 0;
     private int maxScore = 0;
+    private string turn = "front";
+    private float rotation_step = 15f; //degress
     private Rigidbody rigidbodyComponent;
 
     // Start is called before the first frame update
@@ -32,6 +34,19 @@ public class Player : MonoBehaviour
             jumpKeyPressed = true;
         }
 
+        if (Input.GetKey(KeyCode.D))
+        {
+            turn = "right";
+        }
+        else if (Input.GetKey(KeyCode.A))
+        {
+            turn = "left";
+        }
+        else
+        {
+            turn = "front";
+        }
+
         horizontalInput = Input.GetAxis("Horizontal");
     }
 
@@ -47,7 +62,6 @@ public class Player : MonoBehaviour
             {
                 jumpCounter = 0;
             }
-                
 
             //Check if player is in collision with EndStick
             foreach (Collider collider in colliders)
@@ -72,15 +86,54 @@ public class Player : MonoBehaviour
             }
             jumpKeyPressed = false;
         }
+
         //Debug.Log("x: "+GetComponent<Transform>().position.x+" y: "+GetComponent<Transform>().position.y); //Pokazanie pozycji gracza
         //Movement logic
         rigidbodyComponent.velocity = new Vector3(horizontalInput * 2f, rigidbodyComponent.velocity.y, 0);
+
         //Check if player falls over the map
         if (rigidbodyComponent.position.y <= -7)
         {
             rigidbodyComponent.position = new Vector3(0f, 3f, 0f);
         }
-        
+
+        //Roatation of player logic
+        float act_rotation_y = rigidbodyComponent.rotation.eulerAngles.y;
+        float rotate_degree = 0f;
+        if (turn == "right")
+        {
+            if (act_rotation_y > 0)
+            {
+                rotate_degree = -rotation_step;
+                if ((act_rotation_y + rotate_degree) < 0f)
+                    rotate_degree = -act_rotation_y;
+            }
+        }
+        else if (turn == "left")
+        {
+            if (act_rotation_y < 180f)
+            {
+                rotate_degree = rotation_step;
+                if ((act_rotation_y + rotate_degree) > 180f)
+                    rotate_degree = 180f - act_rotation_y;
+            }
+        }
+        else if (turn == "front")
+        {
+            if (act_rotation_y > 90f)
+            {
+                rotate_degree = -rotation_step;
+                if ((act_rotation_y + rotate_degree) < 90f)
+                    rotate_degree = 90f - act_rotation_y;
+            }
+            else if (act_rotation_y < 90f)
+            {
+                rotate_degree = rotation_step;
+                if ((act_rotation_y + rotate_degree) > 90f)
+                    rotate_degree = 90f - act_rotation_y;
+            }
+        }
+        rigidbodyComponent.transform.Rotate(0f, rotate_degree, 0f);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -91,5 +144,4 @@ public class Player : MonoBehaviour
             score++;
         }
     }
-
 }
