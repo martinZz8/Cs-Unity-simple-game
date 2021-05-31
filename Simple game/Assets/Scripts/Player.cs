@@ -94,7 +94,7 @@ public class Player : MonoBehaviour
         //Check if player falls over the map
         if (rigidbodyComponent.position.y <= -7)
         {
-            rigidbodyComponent.position = new Vector3(0f, 3f, 0f);
+            ResetPlayerPosition();
         }
 
         //Roatation of player logic
@@ -138,10 +138,20 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == 7)
+        int layer = other.gameObject.layer;
+        if (layer == 7)
         {
             Destroy(other.gameObject);
             score++;
         }
+        else if (layer == 10)
+        {
+            ResetPlayerPosition();
+        }
+    }
+
+    public void ResetPlayerPosition()
+    {
+        rigidbodyComponent.position = new Vector3(0f, 3f, 0f);
     }
 }

@@ -16,7 +16,7 @@ public class Cam : MonoBehaviour
     public Cam() 
     {
         multiplier_value = 1.2d;
-        divider_step = 500d;
+        divider_step = 700d;
         max_add_move = (float)(Math.Sin(Math.PI / 2d) * multiplier_value);
         min_add_move = (float)(Math.Sin(-Math.PI / 2d) * multiplier_value);
         one_addition = (float)Math.Sin(Math.PI / divider_step);
@@ -35,7 +35,7 @@ public class Cam : MonoBehaviour
         Rigidbody player = GameObject.Find("SpiderCube").GetComponent<Rigidbody>();
         float new_pos_x = player.position.x;
         float new_pos_y = player.position.y + 1.5f;
-        float new_pos_z = player.position.z - 5f;
+        float new_pos_z = player.position.z - 4.2f;
         if (Input.GetKey(KeyCode.D))
         {
             act_add_move += one_addition;
