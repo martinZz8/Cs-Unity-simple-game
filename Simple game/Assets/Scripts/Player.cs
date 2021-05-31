@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     private int score = 0;
     private int maxScore = 0;
     private string turn = "front";
-    private float rotation_step = 15f; //degress
+    private float rotation_step = 17f; //degress
     private Rigidbody rigidbodyComponent;
 
     // Start is called before the first frame update
@@ -139,14 +139,19 @@ public class Player : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         int layer = other.gameObject.layer;
-        if (layer == 7)
+        if (layer == 7) //if player collides with coints
         {
             Destroy(other.gameObject);
             score++;
         }
-        else if (layer == 10)
+        else if (layer == 10) //if player collides with enemy - reset send to spawn point and reset health of all enemies
         {
             ResetPlayerPosition();
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+            foreach (GameObject enemy in enemies)
+            {
+                enemy.GetComponent<Enemy>().SetHealth(30);
+            }
         }
     }
 

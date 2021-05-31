@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    [SerializeField] private GameObject deathEffect;
+
     private int health = 30;
 
     public void TakeDamage(int damage)
@@ -17,7 +19,13 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
-        //Instantiate(deathEffect, transfrom.position, Quaternion.identity);
+        GameObject elem = Instantiate(deathEffect, transform.position, Quaternion.identity);
+        Destroy(elem, 1f);
         Destroy(gameObject);
+    }
+
+    public void SetHealth(int health)
+    {
+        this.health = health;
     }
 }

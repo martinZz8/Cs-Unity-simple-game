@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    [SerializeField] private GameObject impactEffect;
+
     private float speed = 5f;
     private Rigidbody rb;
     private int damage = 10;
@@ -20,17 +22,14 @@ public class Bullet : MonoBehaviour
         {
             turn = "right";
             end_x = rb.position.x + range;
+            proper_vec.x = 1f;
         }
         else
         {
             turn = "left";
             end_x = rb.position.x - range;
-        }
-            
-        if (proper_vec.x > 0)
-            proper_vec.x = 1f;
-        else if (transform.right.x < 0)
             proper_vec.x = -1f;
+        }
 
         rb.velocity = proper_vec * speed;
     }
@@ -48,12 +47,14 @@ public class Bullet : MonoBehaviour
     {
         //Debug.Log(hit_info.name);
         int layer = hit_info.gameObject.layer;
-        if (layer != 6 && layer != 7)
+        if (layer != 6 && layer != 7) //if player doesn't collide with himself and coin
         {
-            if (layer == 10)
+            if (layer == 10) //if player collides with enemy
             {
                 hit_info.GetComponent<Enemy>().TakeDamage(damage);
             }
+            GameObject elem = Instantiate(impactEffect, rb.position, rb.rotation);
+            Destroy(elem, 0.3f);
             Destroy(gameObject);
         }
     }

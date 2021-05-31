@@ -1104,7 +1104,7 @@ GameObject:
   - component: {fileID: 739813012}
   m_Layer: 10
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1198,6 +1198,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d006e2ead38a3934da844747fe3e68c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deathEffect: {fileID: 7016732685161019158, guid: 830b846ae1e850a45a34545fe4231ca4, type: 3}
 --- !u!1001 &740818369
 PrefabInstance:
   m_ObjectHideFlags: 0

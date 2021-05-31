@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 public class Weapon : MonoBehaviour
 {
@@ -22,7 +21,8 @@ public class Weapon : MonoBehaviour
         //If left button is pressed - fire
         if (Input.GetButton("Fire1") && Time.time >= next_time_to_fire)
         {
-            if (Math.Abs(GetComponent<Rigidbody>().velocity.x) >= 0.5f)
+            float angle_y = GetComponent<Rigidbody>().gameObject.transform.eulerAngles.y;
+            if (angle_y == 180f || angle_y == 0f)
             {
                 next_time_to_fire = Time.time + 1f / fire_rate;
                 Shoot();
